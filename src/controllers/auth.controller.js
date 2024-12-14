@@ -4,7 +4,8 @@ import { randomBytes, randomUUID } from 'crypto';
 import createError from '../utils/createError.js';
 import { successResponse } from '../utils/response.js';
 import { checkIsExist, insertToUsers } from '../models/auth.model.js';
-import createToken from '../utils/createToken.js';
+import env from '../utils/env.js';
+import sendEmail from '../helpers/sendMail.js';
 const authController = {
   register: async (req, res, next) => {
     try {
@@ -56,6 +57,11 @@ const authController = {
         deletedAt,
       };
       await insertToUsers(data);
+      const url = `${req.protocol}://${req.get(
+        'host'
+      )}/auth/verify-code=${verifyCode}`;
+
+      await sendEmail(username, url);
       successResponse(res, {
         code: 200,
         status: 'success',
