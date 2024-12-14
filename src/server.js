@@ -13,4 +13,10 @@ server.use(morganMiddleware);
 server.use('/auth', authRouter);
 server.use(errorHandler);
 
+server.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'app running normally',
+  });
+});
 export default server;

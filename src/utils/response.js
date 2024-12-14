@@ -1,3 +1,5 @@
+import env from './env.js';
+const { NODE_ENV } = env;
 export const successResponse = (res, payload) => {
   const {
     code = 200,
@@ -27,6 +29,9 @@ export const failedResponse = (res, payload) => {
     message,
     stack,
   };
+  if (NODE_ENV !== 'development') {
+    delete response.stack;
+  }
   if (details) {
     response.details = details;
   }
