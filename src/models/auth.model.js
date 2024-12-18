@@ -41,20 +41,71 @@ export const insertToUsers = (data) => {
     ];
     db.query(query, values, (err, results) => {
       if (err) {
-        return reject(err);
+        reject({
+          code: 500,
+          message: `database error, ${err.message}`,
+        });
       }
       resolve(results);
     });
   });
 };
-export const checkIsExist = (field, value) => {
+export const checkRows = (table, field, value) => {
   return new Promise((resolve, reject) => {
-    db.query(`SELECT * FROM users WHERE ${field}='${value}'`, (err, result) => {
-      if (err) {
-        console.log(err);
-        reject(err);
+    db.query(
+      `SELECT * FROM ${table} WHERE ${field}='${value}'`,
+      (err, result) => {
+        if (err) {
+          reject({
+            code: 500,
+            message: `database error, ${err.message}`,
+          });
+        }
+        resolve(result);
       }
-      resolve(result);
+    );
+  });
+};
+export const queryVerifyingEmail = (verify_code) => {
+  return new Promise((resolve, reject) => {
+    const values = [true, verify_code];
+    const query = `
+      UPDATE auths
+      SET is_verified = $1, verify_code=${null}
+      WHERE verify_code = $2
+      RETURNING *;
+    `;
+    db.query(query, values, (err, result) => {
+      if (err) {
+        reject({
+          code: 500,
+          message: `database error, ${err.message}`,
+        });
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+export const queryLogin = (data) => {
+  return new Promise((resolve, reject) => {
+    const { access_token, refresh_token, authid } = data;
+    const values = [access_token, refresh_token, authid];
+    const query = `
+      UPDATE auths
+      SET access_token = $1, refresh_token=$2
+      WHERE id = $3
+      RETURNING *;
+    `;
+    db.query(query, values, (err, result) => {
+      if (err) {
+        reject({
+          code: 500,
+          message: `database error, ${err.message}`,
+        });
+      } else {
+        resolve(result);
+      }
     });
   });
 };

@@ -17,6 +17,7 @@ db.connect((err) => {
 
   if (err) {
     console.error(`db error\n${err.message}`);
+    process.abort();
   } else {
     console.log(`connected to database >_<`);
   }
