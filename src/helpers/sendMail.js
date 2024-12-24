@@ -59,6 +59,7 @@ const sendEmail = async (username, url) => {
                 color: #ffffff;
                 background-color: #007bff;
                 text-decoration: none;
+                text-color: #fffff;
                 border-radius: 4px;
             }
             .verification-link:hover {

@@ -3,6 +3,6 @@ import express from '../apps/express.js';
 import protectRoute from '../middlewares/protectRoute.middleware.js';
 const userRouter = express.Router();
 
-userRouter.get('/me', protectRoute, userController.getMe);
-
+userRouter.get('/profile', protectRoute, userController.getMe);
+// userRouter.get('/:id')
 export default userRouter;

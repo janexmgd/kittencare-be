@@ -60,7 +60,7 @@ const authController = {
 
       await sendEmail(username, url);
       successResponse(res, {
-        code: 200,
+        code: 201,
         status: 'success',
         message: 'success register',
         data: data,
@@ -96,7 +96,7 @@ const authController = {
         checkEmail.rows[0].id
       );
       if (checkAuth.rows[0].is_verified === false) {
-        throw createError(400, 'your account not verified by email');
+        throw createError(400, 'your email is not verified');
       }
       const dataToToken = {
         auth_id: checkAuth.rows[0].id,
