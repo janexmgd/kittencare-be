@@ -15,7 +15,10 @@ const protectRoute = async (req, res, next) => {
       }
       if (err) {
         let message = err.message || 'cannot verify token';
-        throw createError(400, message || 'cannot verify JWT TOKEN');
+        throw createError(
+          400,
+          message.replace('jwt', 'token') || 'cannot verify JWT TOKEN'
+        );
       }
     });
 
