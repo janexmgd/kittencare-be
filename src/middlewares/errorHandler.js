@@ -6,9 +6,9 @@ export default (err, req, res, next) => {
   }
 
   failedResponse(res, {
-    code: err.code,
+    code: err.code || 500,
     status: 'error',
-    message: err.message,
+    message: err.message || 'internal server error',
     stack: env.NODE_ENV === 'development' ? err.stack : {},
     details: err.details || null,
   });

@@ -30,14 +30,6 @@ const authController = {
       if (gender !== 'woman' && gender !== 'man')
         throw createError(400, 'invalid gender input');
 
-      const checkEmail = await checkRows('users', 'email', email);
-      if (checkEmail.rowCount !== 0)
-        throw createError(400, 'email is already registered');
-
-      const checkUsername = await checkRows('users', 'username', username);
-      if (checkUsername.rowCount !== 0)
-        throw createError(400, 'username already taken');
-
       const hashedPassword = await hash(password, 10);
       const uuidUsers = randomUUID();
       const uuidAuth = randomUUID();
@@ -109,8 +101,6 @@ const authController = {
       const dataToToken = {
         auth_id: checkAuth.rows[0].id,
         users_id: checkAuth.rows[0].users_id,
-        deleted_at: checkAuth.rows[0].deleted_at,
-        created_at: checkAuth.rows[0].created_at,
       };
       const access_token = await createToken(dataToToken, false);
       const refresh_token = await createToken(dataToToken, true);

@@ -41,6 +41,13 @@ export const insertToUsers = (data) => {
     ];
     db.query(query, values, (err, results) => {
       if (err) {
+        if (err.code === '23505') {
+          const errField = err.constraint.split('_')[1];
+          reject({
+            code: 400,
+            message: `${errField} already exist`,
+          });
+        }
         reject({
           code: 500,
           message: `database error, ${err.message}`,

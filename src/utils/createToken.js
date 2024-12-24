@@ -11,6 +11,7 @@ const createToken = async (data, isRefresh = false) => {
     } else {
       // 2 hour
       let seconds = 2 * 60 * 60;
+      // let seconds = 2;
       expiredTime = Math.floor(Date.now() / 1000) + seconds;
     }
     return jwt.sign(
