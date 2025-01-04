@@ -1,4 +1,4 @@
-import db from '../config/pg.js';
+import db from "../config/pg.js";
 
 export const queryGetUsersById = async (userId) => {
   try {
@@ -7,7 +7,7 @@ export const queryGetUsersById = async (userId) => {
     const result = await db.query(query, value);
     return result;
   } catch (err) {
-    console.error('Database Error:', err);
+    console.error("Database Error:", err);
     throw {
       code: 500,
       message: `Database error: ${err.message}`,

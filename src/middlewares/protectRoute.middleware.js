@@ -6,6 +6,8 @@ const protectRoute = async (req, res, next) => {
   try {
     const access_token = req.headers.access_token;
     if (!access_token) {
+      console.log(401);
+
       throw createError(401, 'unathorized');
     }
     jwt.verify(access_token, env.SECRET_KEY, (err, result) => {

@@ -1,6 +1,8 @@
 import createError from '../utils/createError.js';
 export default (schema) => async (req, res, next) => {
   try {
+    // console.log(req);
+
     await schema.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error) {

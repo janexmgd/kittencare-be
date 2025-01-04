@@ -15,11 +15,12 @@ export const insertToUsers = (data) => {
       createdDate,
       dateBirth,
       deletedAt,
+      imageUrl,
     } = data;
     const query = `
     WITH insert_users AS (
-    INSERT INTO users(id, username, fullname, email, gender, password, dateofbirth, job, created_at, deleted_at)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    INSERT INTO users(id, username, fullname, email, gender, password, dateofbirth, job, created_at, deleted_at, image_url)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $14)
     )
     INSERT INTO auths(id, users_id, is_verified, created_at, verify_code)
     VALUES ($11, $1, $12, $9, $13)
@@ -38,6 +39,7 @@ export const insertToUsers = (data) => {
       uuidAuth,
       isVerified,
       verifyCode,
+      imageUrl,
     ];
     db.query(query, values, (err, results) => {
       if (err) {

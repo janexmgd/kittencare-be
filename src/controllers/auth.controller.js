@@ -37,6 +37,8 @@ const authController = {
       const createdDate = Date.now();
       const verifyCode = randomBytes(32 / 2).toString('hex');
       const dateBirth = moment(dob).unix();
+      const imageUrl =
+        'https://drive.google.com/file/d/1U_GCm419KgRGayTrw1a2YCFKQJsDQtdk/view?usp=drivesdk';
       const deletedAt = null;
       const data = {
         uuidUsers,
@@ -52,6 +54,7 @@ const authController = {
         createdDate,
         dateBirth,
         deletedAt,
+        imageUrl,
       };
       await insertToUsers(data);
       const url = `${req.protocol}://${req.get(
