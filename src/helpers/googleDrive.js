@@ -19,7 +19,7 @@ const authorize = async () => {
   }
 };
 
-const uploadFile = async (media, fileMetadata, requestCase) => {
+export const uploadFile = async (media, fileMetadata, requestCase) => {
   try {
     if (requestCase == 'pfp') {
       fileMetadata.parents = [env.GDRIVE_PFP_FOLDER_ID];
@@ -51,5 +51,15 @@ const uploadFile = async (media, fileMetadata, requestCase) => {
     throw error;
   }
 };
-
-export default uploadFile;
+export const deleteFile = async (fileid) => {
+  try {
+    const account = await authorize();
+    const drive = google.drive({ version: 'v3', auth: account });
+    await drive.files.delete({
+      fileId: fileid,
+    });
+  } catch (error) {
+    console.error('Delete file error :', error);
+    throw error;
+  }
+};

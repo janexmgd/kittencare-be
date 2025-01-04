@@ -38,7 +38,7 @@ const authController = {
       const verifyCode = randomBytes(32 / 2).toString('hex');
       const dateBirth = moment(dob).unix();
       const imageUrl =
-        'https://drive.google.com/file/d/1U_GCm419KgRGayTrw1a2YCFKQJsDQtdk/view?usp=drivesdk';
+        'https://lh3.googleusercontent.com/d/1U_GCm419KgRGayTrw1a2YCFKQJsDQtdk/';
       const deletedAt = null;
       const data = {
         uuidUsers,

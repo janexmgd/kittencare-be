@@ -1,8 +1,8 @@
 import multer from 'multer';
-import path from 'path';
+// import path from 'path';
 import crypto from 'crypto';
 import createError from '../utils/createError.js';
-import uploadFile from '../helpers/googleDriveUploader.js';
+import { uploadFile } from '../helpers/googleDrive.js';
 import streamifier from 'streamifier';
 
 const multerUpload = multer({
@@ -55,10 +55,8 @@ export default (req, res, next) => {
       } else {
         uploadedFile = await uploadFile(media, fileMetadata, 'pets');
       }
-      res.status(200).json({
-        success: true,
-        data: uploadedFile,
-      });
+      req.googleImageUrl = `https://lh3.googleusercontent.com/d/${uploadedFile.id}`;
+      next();
     } catch (uploadError) {
       console.error(uploadError);
       return next(createError(500, 'Error uploading file to Google Drive'));
