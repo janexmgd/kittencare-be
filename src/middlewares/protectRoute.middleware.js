@@ -1,14 +1,17 @@
 import jwt from 'jsonwebtoken';
 import createError from '../utils/createError.js';
 import env from '../utils/env.js';
+import { checkRows } from '../models/auth.model.js';
 
 const protectRoute = async (req, res, next) => {
   try {
     const access_token = req.headers.access_token;
     if (!access_token) {
-      console.log(401);
-
       throw createError(401, 'unathorized');
+    }
+    const isExist = await checkRows('auths', 'access_token', access_token);
+    if (isExist.rowCount === 0) {
+      throw createError(401, 'token no exist');
     }
     jwt.verify(access_token, env.SECRET_KEY, (err, result) => {
       // https://github.com/auth0/node-jsonwebtoken#jwtdecodetoken--options

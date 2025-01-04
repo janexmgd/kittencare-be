@@ -17,9 +17,7 @@ if (NODE_ENV == 'development') {
 }
 server.use('/auth', authRouter);
 server.use('/user', userRouter);
-server.use('/*', (req, res, next) => {
-  return failedResponse(res, { code: 404, message: 'api not found' });
-});
+
 server.use(errorHandler);
 
 server.get('/', (req, res) => {
@@ -27,5 +25,8 @@ server.get('/', (req, res) => {
     status: 'ok',
     message: 'app running normally',
   });
+});
+server.use('/*', (req, res, next) => {
+  return failedResponse(res, { code: 404, message: 'api not found' });
 });
 export default server;
