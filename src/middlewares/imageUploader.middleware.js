@@ -22,6 +22,7 @@ const multerUpload = multer({
 
 export default (req, res, next) => {
   const uploadSingle = multerUpload.single('image');
+
   uploadSingle(req, res, async (err) => {
     if (err) {
       console.error(err);
@@ -48,7 +49,12 @@ export default (req, res, next) => {
         mimetype: mimetype,
         body: streamifier.createReadStream(buffer),
       };
-      const uploadedFile = await uploadFile(media, fileMetadata);
+      let uploadedFile;
+      if (req.url == '/profile/image') {
+        uploadedFile = await uploadFile(media, fileMetadata, 'pfp');
+      } else {
+        uploadedFile = await uploadFile(media, fileMetadata, 'pets');
+      }
       res.status(200).json({
         success: true,
         data: uploadedFile,

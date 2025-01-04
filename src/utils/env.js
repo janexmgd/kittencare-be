@@ -8,9 +8,8 @@ const env = {
   SECRET_KEY: process.env.SECRET_KEY,
   GMAIL_USER: process.env.GMAIL_USER,
   GMAIL_APP_PASSWORD: process.env.GMAIL_APP_PASSWORD,
-  APP_URL: process.env.BASE_URL,
   GDRIVE_EMAIL: process.env.GDRIVE_EMAIL,
   GDRIVE_PRIVATE_KEY: process.env.GDRIVE_PRIVATE_KEY,
-  GDRIVE_FOLDER_ID: process.env.GDRIVE_FOLDER_ID,
+  GDRIVE_PFP_FOLDER_ID: process.env.GDRIVE_PFP_FOLDER_ID,
 };
 export default env;

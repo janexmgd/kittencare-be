@@ -7,6 +7,8 @@ import errorHandler from '../src/middlewares/errorHandler.js';
 import morganMiddleware from './middlewares/morgan.middleware.js';
 import userRouter from './routers/user.router.js';
 import { failedResponse } from './utils/response.js';
+import envCheck from './helpers/envCheck.js';
+envCheck();
 const server = express();
 const { NODE_ENV } = env;
 server.use(cors());

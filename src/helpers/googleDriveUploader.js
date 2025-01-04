@@ -19,9 +19,13 @@ const authorize = async () => {
   }
 };
 
-const uploadFile = async (media, fileMetadata) => {
+const uploadFile = async (media, fileMetadata, requestCase) => {
   try {
-    fileMetadata.parents = [env.GDRIVE_FOLDER_ID];
+    if (requestCase == 'pfp') {
+      fileMetadata.parents = [env.GDRIVE_PFP_FOLDER_ID];
+    } else {
+      fileMetadata.parents = [env.GDRIVE_PFP_FOLDER_ID];
+    }
     const account = await authorize();
     const drive = google.drive({ version: 'v3', auth: account });
     const file = await drive.files.create({
