@@ -59,21 +59,19 @@ export const insertToUsers = (data) => {
     });
   });
 };
-export const checkRows = (table, field, value) => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      `SELECT * FROM ${table} WHERE ${field}='${value}'`,
-      (err, result) => {
-        if (err) {
-          reject({
-            code: 500,
-            message: `database error, ${err.message}`,
-          });
-        }
-        resolve(result);
-      }
-    );
-  });
+export const checkRows = async (table, field, value) => {
+  try {
+    const values = [value];
+    const query = `SELECT * FROM ${table} WHERE ${field}=$1`;
+    const result = await db.query(query, values);
+    return result;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw {
+      code: 500,
+      message: `Database error: ${err.message}`,
+    };
+  }
 };
 export const queryVerifyingEmail = (verify_code) => {
   return new Promise((resolve, reject) => {

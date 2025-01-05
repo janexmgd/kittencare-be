@@ -62,3 +62,17 @@ export const queryEditUsers = async (data) => {
     });
   });
 };
+export const checkIsExist = async (column, value) => {
+  try {
+    const values = [column, value];
+    const query = `SELECT * FROM users WHERE $1=$2`;
+    const result = await db.query(query, values);
+    return result;
+  } catch (error) {
+    console.error('Database Error:', err);
+    throw {
+      code: 500,
+      message: `Database error: ${err.message}`,
+    };
+  }
+};

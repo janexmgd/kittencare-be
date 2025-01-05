@@ -40,10 +40,11 @@ const authController = {
       const imageUrl =
         'https://lh3.googleusercontent.com/d/1U_GCm419KgRGayTrw1a2YCFKQJsDQtdk/';
       const deletedAt = null;
+      const lowerUsername = username.toLowerCase();
       const data = {
         uuidUsers,
         uuidAuth,
-        username,
+        lowerUsername,
         fullName,
         job,
         email,
@@ -60,7 +61,6 @@ const authController = {
       const url = `${req.protocol}://${req.get(
         'host'
       )}/auth/verify?code=${verifyCode}`;
-
       await sendEmail(username, url);
       successResponse(res, {
         code: 201,
