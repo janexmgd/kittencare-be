@@ -6,9 +6,12 @@ import authRouter from './routers/auth.router.js';
 import errorHandler from '../src/middlewares/errorHandler.js';
 import morganMiddleware from './middlewares/morgan.middleware.js';
 import userRouter from './routers/user.router.js';
+import petRouter from './routers/pet.router.js';
 import { failedResponse } from './utils/response.js';
 import envCheck from './helpers/envCheck.js';
+
 envCheck();
+
 const server = express();
 const { NODE_ENV } = env;
 server.use(cors());
@@ -19,7 +22,7 @@ if (NODE_ENV == 'development') {
 }
 server.use('/auth', authRouter);
 server.use('/user', userRouter);
-
+server.use('/pets', petRouter);
 server.use(errorHandler);
 
 server.get('/', (req, res) => {

@@ -13,8 +13,8 @@ const db = new Pool({
   port: config.port,
 });
 db.connect((err) => {
-  console.log(`trying connection to database ${DATABASE_URL}`);
-
+  const censored = DATABASE_URL.replace(config.password, `#############`);
+  console.log(`trying connection to database ${censored}`);
   if (err) {
     console.error(`db error\n${err.message}`);
     process.abort();

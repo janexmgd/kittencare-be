@@ -11,5 +11,6 @@ const env = {
   GDRIVE_EMAIL: process.env.GDRIVE_EMAIL,
   GDRIVE_PRIVATE_KEY: process.env.GDRIVE_PRIVATE_KEY,
   GDRIVE_PFP_FOLDER_ID: process.env.GDRIVE_PFP_FOLDER_ID,
+  GDRIVE_PETS_FOLDER_ID: process.env.GDRIVE_PETS_FOLDER_ID,
 };
 export default env;

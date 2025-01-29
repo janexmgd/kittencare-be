@@ -8,7 +8,7 @@ const authorize = async () => {
     const googleClient = new google.auth.JWT(
       env.GDRIVE_EMAIL,
       null,
-      env.GDRIVE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Pastikan format private key benar
+      env.GDRIVE_PRIVATE_KEY.replace(/\\n/g, '\n'),
       SCOPES
     );
     await googleClient.authorize();
@@ -24,7 +24,7 @@ export const uploadFile = async (media, fileMetadata, requestCase) => {
     if (requestCase == 'pfp') {
       fileMetadata.parents = [env.GDRIVE_PFP_FOLDER_ID];
     } else {
-      fileMetadata.parents = [env.GDRIVE_PFP_FOLDER_ID];
+      fileMetadata.parents = [env.GDRIVE_PETS_FOLDER_ID];
     }
     const account = await authorize();
     const drive = google.drive({ version: 'v3', auth: account });

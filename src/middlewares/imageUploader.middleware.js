@@ -56,9 +56,9 @@ export default (req, res, next) => {
         uploadedFile = await uploadFile(media, fileMetadata, 'pets');
       }
       req.googleImageUrl = `https://lh3.googleusercontent.com/d/${uploadedFile.id}`;
+      req.googleImageId = uploadedFile.id;
       next();
     } catch (uploadError) {
-      console.error(uploadError);
       return next(createError(500, 'Error uploading file to Google Drive'));
     }
   });

@@ -1,8 +1,12 @@
 import { failedResponse } from '../utils/response.js';
 import env from '../utils/env.js';
-export default (err, req, res, next) => {
+import { deleteFile } from '../helpers/googleDrive.js';
+export default async (err, req, res, next) => {
   if (env.NODE_ENV === 'development') {
     console.error('Error message:', err.message);
+  }
+  if (req.googleImageId) {
+    await deleteFile(req.googleImageId);
   }
 
   failedResponse(res, {
