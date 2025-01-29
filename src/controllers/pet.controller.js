@@ -25,7 +25,9 @@ const petController = {
       const data = doCreatePet.rows[0];
 
       successResponse(res, {
+        code: 201,
         data,
+        message: 'success create pet',
       });
     } catch (error) {
       next(error);
