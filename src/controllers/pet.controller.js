@@ -2,7 +2,11 @@ import { randomUUID } from 'crypto';
 import createError from '../utils/createError.js';
 import { successResponse } from '../utils/response.js';
 import { jwtDecode } from 'jwt-decode';
-import { createPetsQuery } from '../models/pet.model.js';
+import {
+  createPetsQuery,
+  getPetsQuery,
+  getTotalQuery,
+} from '../models/pet.model.js';
 const petController = {
   create: async (req, res, next) => {
     try {
@@ -30,6 +34,41 @@ const petController = {
         message: 'success create pet',
       });
     } catch (error) {
+      next(error);
+    }
+  },
+  getPets: async (req, res, next) => {
+    try {
+      const { search_query, page, limit, sort, mode } = req.query;
+      const searchQuery = search_query || '';
+      const pageValue = page ? Number(page) : 1;
+      const limitValue = limit ? Number(limit) : 5;
+      const offsetValue = (pageValue - 1) * limitValue;
+      const sortQuery = sort ? sort : 'name';
+      const modeQuery = mode ? mode : 'ASC';
+      const totalData = await getTotalQuery(searchQuery);
+      const { total } = totalData.rows[0];
+      const data = await getPetsQuery(
+        searchQuery,
+        offsetValue,
+        limitValue,
+        sortQuery,
+        modeQuery
+      );
+      successResponse(res, {
+        code: 200,
+        data: data.rows,
+        pagination: {
+          totalData: Number(total),
+          currentPage: pageValue,
+          dataPerPage: data.rowCount,
+          totalPage: Math.ceil(total / limitValue),
+        },
+        message: 'success get pet',
+      });
+    } catch (error) {
+      console.log(error);
+
       next(error);
     }
   },

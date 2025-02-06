@@ -8,7 +8,6 @@ export default async (err, req, res, next) => {
   if (req.googleImageId) {
     await deleteFile(req.googleImageId);
   }
-
   failedResponse(res, {
     code: err.code || 500,
     status: 'error',
