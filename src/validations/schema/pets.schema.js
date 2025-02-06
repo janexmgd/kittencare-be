@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 export const createPets = Joi.object({
   name: Joi.string()
-    .pattern(/^[a-zA-Z\s]+$/)
+    .pattern(/^[a-zA-Z]+$/)
     .min(3)
     .max(50)
     .required()
